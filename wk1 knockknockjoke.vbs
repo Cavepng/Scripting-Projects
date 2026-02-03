@@ -8,3 +8,4 @@ If Reply1 = "Who's there?" Then
     If Reply2 <> "Orange who?" Then msgbox("Input error, try again.")
 End If
 If Reply1 <> "Who's there?" Then msgbox("Input error, try again.")
+' done
