@@ -9,3 +9,4 @@ If Reply1 = "Who's there?" Then
 End If
 If Reply1 <> "Who's there?" Then msgbox("Input error, try again.")
 ' done
+'Test 2
