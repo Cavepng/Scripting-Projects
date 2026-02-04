@@ -32,10 +32,13 @@ If GetRandomNumber = 1 then CardImage = "Rock"
 If GetRandomNumber = 2 then CardImage = "Paper"
 If GetRandomNumber = 3 then CardImage = "Scissors"
 
-If Answer = "Rock" then IntAnswer = "1"
-If Answer = "Paper" then IntAnswer = "2"
-If Answer = "Scissors" then IntAnswer = "3"
-If LCase(Answer) <> "rock" And LCase(Answer) <> "paper" And LCase(Answer) <> "scissors" then WshShl.Popup " Input error try again."
+If Lcase(Answer) = "rock" then IntAnswer = "1"
+If Lcase(Answer) = "paper" then IntAnswer = "2"
+If Lcase(Answer) = "scissors" then IntAnswer = "3"
+If LCase(Answer) <> "rock" And LCase(Answer) <> "paper" And LCase(Answer) <> "scissors" Then 
+    WshShl.Popup " Input error try again."
+    Wscript.Quit
+End If
 
 
 'Results
@@ -57,3 +60,23 @@ If CardImage = "Paper" And IntAnswer = "3" then msgbox("Player wins!")
 
 If CardImage = "Scissors" And IntAnswer = "1" then msgbox("Player wins!")
 If CardImage = "Scissors" And IntAnswer = "2" then msgbox("Computer wins!")
+
+
+
+' I finished my code. I knew that the if statements at the end were pretty long. I asked gemini how it could be improved.
+    '  1. Check for a Tie first (Efficient!)
+    ' If Answer = CardImage Then
+    '     MsgBox "You both picked " & Answer & ". It's a tie!"
+
+    ' ' 2. Check for Player Win conditions
+    ' ElseIf (Answer = "Rock" And CardImage = "Scissors") Or _
+    '        (Answer = "Paper" And CardImage = "Rock") Or _
+    '        (Answer = "Scissors" And CardImage = "Paper") Then
+    '     MsgBox "Player wins!"
+
+    ' ' 3. If it's not a tie and the player didn't win, the computer MUST have won
+    ' Else
+    '     MsgBox "Computer wins!"
+    ' End If
+
+
