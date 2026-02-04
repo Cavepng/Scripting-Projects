@@ -28,9 +28,9 @@ Randomize
 GetRandomNumber = Int((3 * Rnd()) + 1)
 
 'Assigns number based on intiger. 
-If GetRandomNumber = 1 then CardImage = "rock"
-If GetRandomNumber = 2 then CardImage = "paper"
-If GetRandomNumber = 3 then CardImage = "scissors"
+If GetRandomNumber = 1 then CardImage = "Rock"
+If GetRandomNumber = 2 then CardImage = "Paper"
+If GetRandomNumber = 3 then CardImage = "Scissors"
 
 If Answer = "Rock" then IntAnswer = "1"
 If Answer = "Paper" then IntAnswer = "2"
@@ -38,21 +38,22 @@ If Answer = "Scissors" then IntAnswer = "3"
 If LCase(Answer) <> "rock" And LCase(Answer) <> "paper" And LCase(Answer) <> "scissors" then WshShl.Popup " Input error try again."
 
 
-'Results. I searched how to get a new line because i did not want 12 spaces.
+'Results
+'I searched how to get a new line because i did not want 12 spaces.
 WshShl.Popup "You Picked: " & Answer  & vbCrLf & _
     "Computer picked: " & CardImage
 
 ' Use if statements to account for all possible outcomes. there is without a doubt a much better way to do this.
 ' I could have also compared text instead of inigers to make it easier to read.
-If CardImage = "rock" And IntAnswer = "1" then WshShl.Popup "You tied!"
-If CardImage = "paper" And IntAnswer = "2" then WshShl.Popup "You tied!"
-If CardImage = "scissors" And IntAnswer = "3" then WshShl.Popup "You tied!"
+If CardImage = "Rock" And IntAnswer = "1" then msgbox("You tied!")
+If CardImage = "Paper" And IntAnswer = "2" then msgbox("You tied!")
+If CardImage = "Scissors" And IntAnswer = "3" then msgbox("You tied!")
 
-If CardImage = "rock" And IntAnswer = "2" then WshShl.Popup "Player wins!"
-If CardImage = "rock" And IntAnswer = "3" then WshShl.Popup "Computer wins!"
+If CardImage = "Rock" And IntAnswer = "2" then msgbox("Player wins!")
+If CardImage = "Rock" And IntAnswer = "3" then msgbox("Computer wins!")
 
-If CardImage = "paper" And IntAnswer = "1" then WshShl.Popup "Computer wins!"
-If CardImage = "paper" And IntAnswer = "3" then WshShl.Popup "Player wins!"
+If CardImage = "Paper" And IntAnswer = "1" then msgbox("Computer wins!")
+If CardImage = "Paper" And IntAnswer = "3" then msgbox("Player wins!")
 
-If CardImage = "scissors" And IntAnswer = "1" then WshShl.Popup "Player wins!"
-If CardImage = "scissors" And IntAnswer = "2" then WshShl.Popup "Computer wins!"
+If CardImage = "Scissors" And IntAnswer = "1" then msgbox("Player wins!")
+If CardImage = "Scissors" And IntAnswer = "2" then msgbox("Computer wins!")
