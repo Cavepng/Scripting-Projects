@@ -28,9 +28,9 @@ Randomize
 GetRandomNumber = Int((3 * Rnd()) + 1)
 
 'Assigns number based on intiger. 
-If GetRandomNumber = 1 then CardImage = "Rock"
-If GetRandomNumber = 2 then CardImage = "Paper"
-If GetRandomNumber = 3 then CardImage = "Scissors"
+If GetRandomNumber = 1 then CardImage = "rock"
+If GetRandomNumber = 2 then CardImage = "paper"
+If GetRandomNumber = 3 then CardImage = "scissors"
 
 If Answer = "Rock" then IntAnswer = "1"
 If Answer = "Paper" then IntAnswer = "2"
