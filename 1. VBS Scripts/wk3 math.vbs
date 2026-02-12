@@ -1,8 +1,9 @@
 '************************************************
-'Script Name: Automatic Wordpad Script
+'Script Name: Math Game
 'Author: Micah Hibbard
 'Created: 2/11/2026
-'Description: Gets input from use and opens Wordpad and types in input.
+'Description: Quizes user, validates input, and opens Wordpad if they  
+'guess the wrong number.
 '************************************************
 
 
@@ -40,7 +41,7 @@ Else
     "equation?", 36, cTitlebarMsg)
     If ProveIt = vbYes Then 'Execute wordpad section if player would like to see the correct solution.
         WshShl.Run "notepad"
-        WScript.Sleep 2222
+        WScript.Sleep 5000
         WshShl.SendKeys "Use the correct order of operations to solve the math problem."
         WScript.Sleep 1000
         WshShl.SendKeys "{ENTER}"
@@ -56,7 +57,7 @@ Else
         WshShl.SendKeys "Done answer is 16."
         WScript.Sleep 4000
         WshShl.SendKeys "{ENTER}{ENTER}{ENTER}"
-        WshShl.SendKeys "Quiting application"
+        WshShl.SendKeys "Minimizing application"
         WScript.Sleep 500
         WshShl.SendKeys "."
         WScript.Sleep 500
@@ -64,23 +65,27 @@ Else
         WScript.Sleep 500
         WshShl.SendKeys "."
         WScript.Sleep 500
-        WshShl.SendKeys "{ENTER} Byebye!"
-        WScript.Sleep 200
+        'minimize browser window
+        WshShl.SendKeys "% n"
+        WScript.Sleep 2000
+        'Computes the answer in the calculator application.
+        WshShl.Run "Calc"
+        WScript.Sleep 1000
+        WshShl.SendKeys 5 & "{*}"
+        WScript.Sleep 2000
+        WshShl.SendKeys 9
+        WScript.Sleep 2000
+        WshShl.SendKeys "{ENTER}"
+        WScript.Sleep 2000
+        WshShl.SendKeys "{/}" & 3
+        WScript.Sleep 2000
+        WshShl.SendKeys "{ENTER}"
+        WScript.Sleep 2000
+        WshShl.SendKeys "{+}" & 1
+        WScript.Sleep 2000
+        WshShl.SendKeys "{ENTER}"
+        WScript.Sleep 3000
         WshShl.SendKeys "%{F4}"
-        WshShl.SendKeys "%{N}"
-        'Open Calc
-     '   WshShl.Run "Calc"
-     '   WScript.Sleep 1000
-      '  WshShl.SendKeys 5 & "{*}"
-     '   WScript.Sleep 2000
-    '    WshShl.SendKeys 9
-    '    WScript.Sleep 2000
-   '     WshShl.SendKeys "{ENTER}"
-    '    WScript.Sleep 2000
-    '    WshShl.SendKeys "{/}" & 3
-   '     WScript.Sleep 2000
-   '     WshShl.SendKeys "
-
-
+        MsgBox("My twelve year old brother could have done that.")
     End If
 End If
