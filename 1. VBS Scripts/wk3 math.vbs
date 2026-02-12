@@ -67,6 +67,7 @@ Else
         WScript.Sleep 500
         'Close window
         WshShl.SendKeys "%{F4}"
+        WshShl.SendKeys "%{N}"
         WScript.Sleep 2000
         'Computes the answer in the calculator application.
         WshShl.Run "Calc"
