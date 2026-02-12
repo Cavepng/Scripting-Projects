@@ -57,7 +57,7 @@ Else
         WshShl.SendKeys "Done answer is 16."
         WScript.Sleep 4000
         WshShl.SendKeys "{ENTER}{ENTER}{ENTER}"
-        WshShl.SendKeys "Minimizing application"
+        WshShl.SendKeys "Closing application"
         WScript.Sleep 500
         WshShl.SendKeys "."
         WScript.Sleep 500
@@ -65,8 +65,8 @@ Else
         WScript.Sleep 500
         WshShl.SendKeys "."
         WScript.Sleep 500
-        'minimize browser window
-        WshShl.SendKeys "% n"
+        'Close window
+        WshShl.SendKeys "%{F4}"
         WScript.Sleep 2000
         'Computes the answer in the calculator application.
         WshShl.Run "Calc"
@@ -86,6 +86,6 @@ Else
         WshShl.SendKeys "{ENTER}"
         WScript.Sleep 3000
         WshShl.SendKeys "%{F4}"
-        MsgBox("My twelve year old brother could have done that.")
+        MsgBox("Done!")
     End If
 End If
