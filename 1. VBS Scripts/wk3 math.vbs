@@ -69,17 +69,17 @@ Else
         WshShl.SendKeys "%{F4}"
         WshShl.SendKeys "%{N}"
         'Open Calc
-        WshShl.Run "Calc"
-        WScript.Sleep 1000
-        WshShl.SendKeys 5 & "{*}"
-        WScript.Sleep 2000
-        WshShl.SendKeys 9
-        WScript.Sleep 2000
-        WshShl.SendKeys "{ENTER}"
-        WScript.Sleep 2000
-        WshShl.SendKeys "{/}" & 3
-        WScript.Sleep 2000
-        WshShl.SendKeys "
+     '   WshShl.Run "Calc"
+     '   WScript.Sleep 1000
+      '  WshShl.SendKeys 5 & "{*}"
+     '   WScript.Sleep 2000
+    '    WshShl.SendKeys 9
+    '    WScript.Sleep 2000
+   '     WshShl.SendKeys "{ENTER}"
+    '    WScript.Sleep 2000
+    '    WshShl.SendKeys "{/}" & 3
+   '     WScript.Sleep 2000
+   '     WshShl.SendKeys "
 
 
     End If
