@@ -29,11 +29,14 @@ def main():
         contents=user_input
     )
 
-    print("\n--- Response ---")
-    for chunk in response:
-        if chunk.text:
-            print(chunk.text, end="")
-    print("\n----------------")
+
+print(response.text)
+
+#    print("\n--- Response ---")
+#    for chunk in response:
+#        if chunk.text:
+#            print(chunk.text, end="")
+#    print("\n----------------")
 
 if __name__ == "__main__":
     main()
