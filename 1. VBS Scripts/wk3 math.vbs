@@ -40,7 +40,7 @@ Else
     ProveIt = MsgBox("Incorrect, do you want to see me solve the " & _ 
     "equation?", 36, cTitlebarMsg)
     If ProveIt = vbYes Then 'Execute wordpad section if player would like to see the correct solution.
-        WshShl.Run "notepad"
+        WshShl.Run "wordpad"
         WScript.Sleep 5000
         WshShl.SendKeys "Use the correct order of operations to solve the math problem."
         WScript.Sleep 1000
