@@ -1,70 +1,79 @@
+'*************************************************************************
+'Script Name: Captain Adventure.vbs
+'Author: MH
+'Created: 02/25/2026
+'Description: This script prompts the user to answer a number of questions
+'and then uses Gemini API to create a story based on the responces.
+'*************************************************************************
+
+'Section 1: Set up
 Option Explicit
 
-' --- CONFIGURATION ---
-Dim apiKey, model, userPrompt
-apiKey = "AIzaSyA9asClILg2dCD-4rQmeNz6fWqnDHYGRXk"
-model  = "gemini-3-flash-preview"
+Const cGameTitle = "Captain Adventure"
+Const cApiKey = "INSERT_GEMINI_API_KEY"
+Const cApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key="
 
-' --- GET USER INPUT ---
-userPrompt = InputBox("Enter your prompt:", "Gemini AI Assistant")
-If userPrompt = "" Then WScript.Quit
 
-' --- CALL THE API ---
-Dim url, requestBody, http, responseJSON
-url = "[https://generativelanguage.googleapis.com/v1beta/models/](https://generativelanguage.googleapis.com/v1beta/models/)" & model & ":generateContent?key=" & apiKey
+Dim strName, strVacation, strObject, strFriend, strFood, strStory
+Dim strSystemPrompt, strUserInput, strUserPrompt, strJsonResponse
 
-' Correctly escaped JSON for VBScript
-requestBody = "{""contents"": [{""parts"":[{""text"": """ & userPrompt & """}]}]}"
-
-Set http = CreateObject("MSXML2.ServerXMLHTTP.6.0")
-http.Open "POST", url, False
-http.SetRequestHeader "Content-Type", "application/json"
-
-On Error Resume Next
-http.Send requestBody
-
-' Check for network-level errors
-If Err.Number <> 0 Then
-    MsgBox "Network Error: " & Err.Description, 16, "Fatal Error"
+If cApiKey = "" Then
+    MsgBox("Please input your Gemini API key.")
     WScript.Quit
-End If
-On Error GoTo 0
-
-responseJSON = http.ResponseText
-
-' --- THE PARSER ---
-Dim html, window, result
-Set html = CreateObject("htmlfile")
-Set window = html.parentWindow
-
-' JavaScript helper to handle Gemini's specific JSON structure
-window.execScript "function getGeminiText(jsonStr) { " & _
-    "  try { " & _
-    "    var obj = JSON.parse(jsonStr); " & _
-    "    if (obj.error) { return 'API_ERROR: ' + obj.error.message; } " & _
-    "    var txt = obj.candidates[0].content.parts[0].text; " & _
-    "    return txt.replace(/```json|```/g, '').trim(); " & _
-    "  } catch(e) { return 'PARSE_FAIL: ' + e.message; } " & _
-    "}", "JScript"
-
-result = window.getGeminiText(responseJSON)
-
-' --- SMART OUTPUT ---
-If Left(result, 10) = "API_ERROR:" Then
-    MsgBox "Google API returned an error:" & vbCrLf & vbCrLf & Mid(result, 11), 16, "Gemini API Error"
-ElseIf Left(result, 11) = "PARSE_FAIL:" Then
-    ' This is where your previous error happened. Let's see the raw data now.
-    Dim seeRaw
-    seeRaw = MsgBox("Parsing failed. Would you like to see the raw response for debugging?", 36, "Debug Info")
-    If seeRaw = 6 Then 
-        ' Create a temporary file to show long JSON responses
-        Dim fso, tempFile
-        Set fso = CreateObject("Scripting.FileSystemObject")
-        tempFile = fso.GetSpecialFolder(2) & "\gemini_debug.txt"
-        fso.CreateTextFile(tempFile, True).Write(responseJSON)
-        CreateObject("WScript.Shell").Run "notepad.exe " & tempFile
-    End If
 Else
-    ' SUCCESS! Show the clean text.
-    MsgBox result, 64, "Gemini Response"
+
+'Section 2: Inputs
+strName = InputBox("What's your name?", cGameTitle, "John")
+strVacation = InputBox("Ideal vacation destination", cGameTitle, "Chicago")
+strObject = InputBox("Name a strange object.", cGameTitle, "obelisk")
+strFriend = InputBox("Who is your best friend?", cGameTitle, "Jane")
+strFood = InputBox("What's your favorite food?", cGameTitle, "pizza")
+
+strUserPrompt = InputBox("What should the Madlib be based on?", cGameTitle, "College")
+'Section 3: Simplified AI Logic
+strSystemPrompt = "You are a creative storyteller. Write a 5-sentence adventure story about Captain Adventure. Use the following details: Name, Vacation Spot, Strange Object, Friend, and Favorite Food. Base the story off of the Madlib Theme. Return ONLY the story text. Do not include any code or markdown."
+
+' Combine the user's answers and the theme into one single string
+strUserInput = "Name: " & strName & ", Vacation: " & strVacation & ", Object: " & strObject & ", Friend: " & strFriend & ", Food: " & strFood & " | Theme: " & strUserPrompt
+
+' Now we only send TWO arguments, matching what the function expects
+strStory = CallGemini(strSystemPrompt, strUserInput)
+
+If strStory = "" Then
+    strStory = "The Oracle is unavailable. Please check your API key."
+End If
+
+'Display the story
+MsgBox strStory, vbOkOnly + vbExclamation, cGameTitle
+
+'--- THE ERROR-FREE HELPER ---
+
+Function CallGemini(sys, user)
+    Dim objHTTP, strPayload, resp, clean
+    
+    'We still clean quotes from the input just to be safe with the JSON structure
+    Dim safeSys: safeSys = Replace(sys, Chr(34), "\""")
+    Dim safeUser: safeUser = Replace(user, Chr(34), "\""")
+
+    strPayload = "{" & Chr(34) & "system_instruction" & Chr(34) & ": {" & Chr(34) & "parts" & Chr(34) & ":{" & Chr(34) & "text" & Chr(34) & ": " & Chr(34) & safeSys & Chr(34) & "}}," & _
+                 Chr(34) & "contents" & Chr(34) & ": [{" & Chr(34) & "parts" & Chr(34) & ":[{" & Chr(34) & "text" & Chr(34) & ": " & Chr(34) & safeUser & Chr(34) & "}]}]}"
+
+    Set objHTTP = CreateObject("MSXML2.XMLHTTP")
+    objHTTP.Open "POST", cApiUrl & cApiKey, False
+    objHTTP.SetRequestHeader "Content-Type", "application/json"
+    
+    On Error Resume Next
+    objHTTP.Send strPayload
+    
+    If objHTTP.Status = 200 Then
+        resp = objHTTP.ResponseText
+        'Extract just the text result
+        clean = Split(Split(resp, Chr(34) & "text" & Chr(34) & ": " & Chr(34))(1), Chr(34))(0)
+        'Clean up newlines so the MsgBox looks nice
+        clean = Replace(clean, "\n", vbCrLf)
+        CallGemini = clean
+    Else
+        CallGemini = ""
+    End If
+End Function
 End If
