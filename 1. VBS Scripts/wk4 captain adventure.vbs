@@ -20,6 +20,9 @@ Dim strSystemPrompt, strUserInput, strUserPrompt, strJsonResponse
 If cApiKey = "" Then
     MsgBox("Please input your Gemini API key.")
     WScript.Quit
+ElseIf cApiKey = "INSERT_GEMINI_API_KEY" Then
+    MsgBox("Please replace INSERT_GEMINI_API_KEY with your Gemini API key.")
+    WScript.Quit
 Else
 
 'Section 2: Inputs
