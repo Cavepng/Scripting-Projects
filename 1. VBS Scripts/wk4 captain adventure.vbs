@@ -10,7 +10,7 @@
 Option Explicit
 
 Const cGameTitle = "Captain Adventure"
-Const cApiKey = "INSERT_GEMINI_API_KEY"
+Const cApiKey = "AIzaSyCT1n8qD-wVSmgzagw4YbXwKtVKCWDNfKM"
 Const cApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key="
 
 
